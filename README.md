@@ -1,6 +1,6 @@
 # MockRestService
 
-A simple solution to mock network traffic as HTTP POST request. It is also an example of utilizing simple RestService library. https://github.com/stanislawbartkowski/RestService
+A simple solution to mock network traffic as HTTP POST/GET request. It is also an example of utilizing simple RestService library. https://github.com/stanislawbartkowski/RestService
 
 Can be easily extended to more HTTP methods.<br><br>
 The solution as provided as two Eclipse projects: the server and the client. 
