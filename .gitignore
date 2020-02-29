@@ -2,3 +2,4 @@
 output/*
 /target/
 /.idea/libraries/
+run.sh
