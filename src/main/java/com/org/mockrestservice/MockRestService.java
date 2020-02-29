@@ -23,6 +23,6 @@ public class MockRestService extends RestStart {
             help();
         }
         int PORT = Integer.parseInt(args[0]);
-        RestStart(PORT, (server) -> new RestServices().resgisterServices(server));
+        RestStart(PORT, (server) -> new RestServices().registerServices(server));
     }
 }

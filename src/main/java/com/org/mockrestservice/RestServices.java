@@ -20,7 +20,6 @@ class RestServices {
             super(url, false);
         }
 
-
         @Override
         public RestParams getParams(HttpExchange httpExchange) throws IOException {
             List<String> methods = new ArrayList<String>();
@@ -80,10 +79,36 @@ class RestServices {
         }
     }
 
-    void resgisterServices(HttpServer server) {
+    class UploadFile extends RestHelper.RestServiceHelper {
+
+        UploadFile() {
+            super("upload", false);
+        }
+
+        @Override
+        public RestParams getParams(HttpExchange httpExchange) throws IOException {
+            List<String> methods = new ArrayList<String>();
+            methods.add(RestHelper.POST);
+            RestParams par = new RestParams(RestHelper.POST, Optional.empty(), false, methods);
+            return par;
+        }
+
+        @Override
+        public void servicehandle(RestHelper.IQueryInterface v) throws IOException {
+
+            String s = getRequestBodyString(v);
+            // only print uploaded data
+            RestLogger.info(s);
+            produceNODATAResponse(v);
+        }
+    }
+
+
+    void registerServices(HttpServer server) {
         RestHelper.registerService(server, new ResetCounter());
         RestHelper.registerService(server, new Counter());
         RestHelper.registerService(server, new IncCounter());
+        RestHelper.registerService(server, new UploadFile());
     }
 
 }
