@@ -6,35 +6,54 @@ Can be easily extended to more HTTP methods.<br><br>
 The solution as provided as two Intellij Idea projects: the server and the client. The server is a standalone Java application, the only prerequisite is RestService library mentioned above.It does not require any web server container like Tomcat or Jetty.
 
 The client is Python 3 script.
-
-# Installation
+# Server
+## Installation
 Download and install RestService to the local Maven repository.<br>
 https://github.com/stanislawbartkowski/RestService
 
 > git clone git clone https://github.com/stanislawbartkowski/MockRestService.git<br>|
+> mvn clean package<br>
+> ls target
+```
+MockRestService-1.0-SNAPSHOT.jar
+MockRestService-1.0-SNAPSHOT-jar-with-dependencies.jar
+```
+## Run MockRest server
+> cp template/runserver.sh .<br>
+```
+PORT=9800
+java -cp target/MockRestService-1.0-SNAPSHOT-jar-with-dependencies.jar com.org.mockrestservice.MockRestService $POR
+```
+The only configuration is to specify the port number (here 9800).
+> ./runserver.sh
+```
+Feb 29, 2020 7:42:20 PM com.rest.restservice.RestLogger info
+INFO: Start HTTP Server, listening on port 9800
+Feb 29, 2020 7:42:20 PM com.rest.restservice.RestLogger info
+INFO: Register service: resetcounter
+Feb 29, 2020 7:42:20 PM com.rest.restservice.RestLogger info
+INFO: Register service: counter
+Feb 29, 2020 7:42:20 PM com.rest.restservice.RestLogger info
+INFO: Register service: rest
+Feb 29, 2020 7:42:20 PM com.rest.restservice.RestLogger info
+INFO: Register service: upload
 
+```
+The server is ready.
 
-# Server
-Get ready to use *war* file (https://github.com/stanislawbartkowski/MockRest/tree/master/RestMockServer/war) and deploy to Tomcat container.<p>
-Server part is ready.
-
-You can also download the whole Eclipse project and extend according to your needs.<br>
-
-*Prerequisite for Eclipse project*<br>
-
-The dependecy is resolved using *iy* Eclipse plugin. Install the plugin beforehand.
+## Test
 
 * POST request
-> curl -X POST  http://localhost:8080/RestMockServer/rest/postform?content=Hello
+> curl -X POST  http://localhost:9800/rest?content=Hello
 
-* File upload
-> curl -F 'data=@file.txt' http://localhost:8080/RestMockServer/upload
+* Upload
+> curl -X POST -d Hello  http://localhost:9800/upload
 
-There is an internal counter scoring the number of POST requests received
+There is an internal counter scoring the number of POST "rest" requests received
 * Reset counter
-> curl -X GET  http://localhost:8080/RestMockServer/rest/resetcounter
+> curl -X GET  http://localhost:9800/resetcounter
 * The current value of the counter
-> curl -X GET  http://localhost:8080/RestMockServer/rest/counter
+> curl -X GET  http://localhost:9800/counter
 
 # Client
 ## Prerequisites
