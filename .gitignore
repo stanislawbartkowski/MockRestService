@@ -3,3 +3,4 @@ output/*
 /target/
 /.idea/libraries/
 run.sh
+/CallRest/env.rc
