@@ -3,9 +3,14 @@
 A simple solution to mock network traffic as HTTP POST/GET request. It is also an example of utilizing simple RestService library. https://github.com/stanislawbartkowski/RestService
 
 Can be easily extended to more HTTP methods.<br><br>
-The solution as provided as two Eclipse projects: the server and the client. 
-The server part is a simple servlet which accepts file uploading and POST request. The target war file can be deployed to Tomcat container.
+The solution as provided as two Intellij Idea projects: the server and the client. The server is standalone Java application, the only prerequisite is RestService library mentioned above.It does not require any web server container like Tomcat or Jetty.
+
 The client is Python 3 script.
+
+# Installation
+> 
+Download and install RestService to the local Maven repository.<br>
+https://github.com/stanislawbartkowski/RestService
 
 # Server
 Get ready to use *war* file (https://github.com/stanislawbartkowski/MockRest/tree/master/RestMockServer/war) and deploy to Tomcat container.<p>
