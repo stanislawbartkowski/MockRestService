@@ -25,7 +25,7 @@ class RestServices {
             List<String> methods = new ArrayList<String>();
             methods.add(RestHelper.GET);
             methods.add(RestHelper.POST);
-            return new RestParams(RestHelper.GET, Optional.of(RestParams.CONTENT.TEXT), false, methods);
+            return new RestParams(RestHelper.GET, Optional.of(RestParams.CONTENT.TEXT), false, methods, Optional.empty());
         }
     }
 
@@ -65,7 +65,7 @@ class RestServices {
         public RestParams getParams(HttpExchange httpExchange) throws IOException {
             List<String> methods = new ArrayList<String>();
             methods.add(RestHelper.POST);
-            RestParams par = new RestParams(RestHelper.POST, Optional.of(RestParams.CONTENT.TEXT), false, methods);
+            RestParams par = new RestParams(RestHelper.POST, Optional.of(RestParams.CONTENT.TEXT), false, methods,Optional.empty());
             par.addParam("content", PARAMTYPE.STRING);
             return par;
         }
@@ -89,7 +89,7 @@ class RestServices {
         public RestParams getParams(HttpExchange httpExchange) throws IOException {
             List<String> methods = new ArrayList<String>();
             methods.add(RestHelper.POST);
-            RestParams par = new RestParams(RestHelper.POST, Optional.empty(), false, methods);
+            RestParams par = new RestParams(RestHelper.POST, Optional.empty(), false, methods, Optional.empty());
             return par;
         }
 
