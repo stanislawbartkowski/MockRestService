@@ -87,7 +87,7 @@ Test:<br>
 
 Test with security verification, the server certificate CN name should match the server URL hostname.
 
-> curl -X POST https://<server hostname>:9800/rest?content=Hello --cacert /CA chain certificate/
+> curl -X POST https://\<server hostname\>:9800/rest?content=Hello --cacert /CA chain certificate/
 
 # Client
 ## Prerequisites
