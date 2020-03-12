@@ -75,11 +75,14 @@ Test<br>
 > curl -X POST https://localhost:9800/rest?content=Hello -k
 
 ### Server certificate signed by CA
-Import certificate and create keystore.
-> keytool -importcert  -alias alias -keystore keystore.jks  -file <certificate file> <br>
 
-Import CA certificate chain
-> keytool -importcert  -keystore keystore.jks  -file <CA certficate>
+Import signed p12 key/cert pair into JKS keystore.
+>  keytool -importkeystore -deststorepass secret -destkeystore keystore.jks  -srckeystore /p12 file/ -srcstoretype PKCS12 -destalias alias -aas 1<br>
+
+Test:<br>
+> curl -X POST https://localhost:9800/rest?content=Hello -k
+
+
 
 # Client
 ## Prerequisites
