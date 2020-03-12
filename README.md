@@ -74,6 +74,9 @@ Example command to prepare self-signed certificate.<br>
 Test<br>
 > curl -X POST https://localhost:9800/rest?content=Hello -k
 
+Test with security verification<br>
+> curl -X POST https://postgres.sb.com:9800/rest?content=Hello --cacert /CA chain certificate file/ 
+
 ### Server certificate signed by CA
 
 Import signed p12 key/cert pair into JKS keystore.
