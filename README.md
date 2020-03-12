@@ -78,7 +78,7 @@ Test<br>
 Import certificate and create keystore.
 > keytool -importcert  -alias alias -keystore keystore.jks  -file <certificate file> <br>
 
-Import CA certificate chaine
+Import CA certificate chain
 > keytool -importcert  -keystore keystore.jks  -file <CA certficate>
 
 # Client
