@@ -74,6 +74,13 @@ Example command to prepare self-signed certificate.<br>
 Test<br>
 > curl -X POST https://localhost:9800/rest?content=Hello -k
 
+### Server certificate signed by CA
+Import certificate and create keystore.
+> keytool -importcert  -alias alias -keystore keystore.jks  -file <certificate file> <br>
+
+Import CA certificate chaine
+> keytool -importcert  -keystore keystore.jks  -file <CA certficate>
+
 # Client
 ## Prerequisites
 * Python 3 (tested with Python 3.6 level)<br>
