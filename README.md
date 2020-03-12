@@ -80,7 +80,7 @@ Test with security verification<br>
 ### Server certificate signed by CA
 
 Import signed p12 key/cert pair into JKS keystore.
->  keytool -importkeystore -deststorepass secret -destkeystore keystore.jks  -srckeystore /p12 file/ -srcstoretype PKCS12 -destalias alias -aas 1<br>
+>  keytool -importkeystore -deststorepass secret -destkeystore keystore.jks  -srckeystore /p12 file/ -srcstoretype PKCS12 -destalias alias -as 1<br>
 
 Test:<br>
 > curl -X POST https://localhost:9800/rest?content=Hello -k
@@ -88,6 +88,27 @@ Test:<br>
 Test with security verification, the server certificate CN name should match the server URL hostname.
 
 > curl -X POST https://\<server hostname\>:9800/rest?content=Hello --cacert /CA chain certificate/
+
+### Server certificate requested by CSR file
+Generate self-signed certiticate<br>
+> keytool -genkey -alias alias -keypass secret -keystore mykey.keystore -storepass secret<br>
+
+Generate CSR file<br>
+> keytool -certreq -keyalg RSA -alias alias -file certreq.csr -keystore keystore.jks<br>
+
+Send CSR file to CA center for signing. <br>
+Important: In case of authority certificate chain, it is necessary to import all certificates in the chain separately one after one. Otherwise, while importing the server certificate it will fail with "Failed to establish chain from reply."<br>
+<br>
+Import root certificate<br>
+> keytool -import -alias root -keystore keystore.jks -file root.cert.pem<br>
+
+Import intermediate certificate<br>
+> keytool -import -alias intermediate -keystore keystore.jks -file intermediate.cert.pem<br>
+
+Import server certificate<br>
+> keytool -import -alias alias -keystore keystore.jks -file root.cert.pem<br>
+
+Test as above.
 
 # Client
 ## Prerequisites
