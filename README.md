@@ -85,7 +85,9 @@ Import signed p12 key/cert pair into JKS keystore.
 Test:<br>
 > curl -X POST https://localhost:9800/rest?content=Hello -k
 
+Test with security verification, the server certificate CN name should match the server URL hostname.
 
+> curl -X POST https://<server hostname>:9800/rest?content=Hello --cacert /CA chain certificate/
 
 # Client
 ## Prerequisites
