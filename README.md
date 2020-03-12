@@ -18,7 +18,7 @@ https://github.com/stanislawbartkowski/RestService
 MockRestService-1.0-SNAPSHOT.jar
 MockRestService-1.0-SNAPSHOT-jar-with-dependencies.jar
 ```
-## Run MockRest server
+## Run HTTP non-secure MockRest server
 > cp template/runserver.sh .<br>
 ```
 PORT=9800
@@ -54,6 +54,8 @@ There is an internal counter scoring the number of POST "rest" requests received
 > curl -X GET  http://localhost:9800/resetcounter
 * The current value of the counter
 > curl -X GET  http://localhost:9800/counter
+
+## Run HTTPS secure MockRest server
 
 # Client
 ## Prerequisites
