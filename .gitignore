@@ -5,4 +5,5 @@ output/*
 run.sh
 /CallRest/env.rc
 /secure.properties
+/runserver.sh
 /sec
