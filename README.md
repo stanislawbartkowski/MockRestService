@@ -60,16 +60,19 @@ There is an internal counter scoring the number of POST "rest" requests received
 ### Configuration
 Copy and customize *template/server.properties* file containing data for server certificates.
 
-| Variable | Description | Example
+| Variable | Description | Example |
+| -------- | -------- | ----------|
 | store.key.filename | Pathname of the server key file |  /home/sbartkowski/mykey.keystore
 | key.store.password | Password protecting key file | secret
 | alias | Alias of the server certificate in the key file | alias
 
 In the *runserver.sh* script file uncomment the setting of *SECURITY* variable. The variable should point to *server.properties* file.<br> 
 ### Self-signed certificate
-Sample command.
+Example command to prepare self-signed certificate.<br>
 > keytool -genkey -alias alias -keypass secret -keystore mykey.keystore -storepass secret
 
+Test<br>
+> curl -X POST https://localhost:9800/rest?content=Hello -k
 
 # Client
 ## Prerequisites
