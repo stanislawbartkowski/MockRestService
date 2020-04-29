@@ -11,7 +11,7 @@ The client is Python 3 script.
 Download and install RestService to the local Maven repository.<br>
 https://github.com/stanislawbartkowski/RestService
 
-> git clone git clone https://github.com/stanislawbartkowski/MockRestService.git<br>|
+> git clone git clone https://github.com/stanislawbartkowski/MockRestService.git<br>
 > mvn clean package<br>
 > ls target
 ```
