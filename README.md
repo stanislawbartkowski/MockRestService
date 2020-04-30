@@ -74,18 +74,6 @@ Example command to prepare self-signed certificate. Pay attention to proper key 
 Test, -k switches off the certificate validation<br>
 > curl -X POST https://localhost:9800/rest?content=Hello -k
 
-### Server certificate signed by CA
-
-Import signed p12 key/cert pair into JKS keystore.
->  keytool -importkeystore -deststorepass secret -destkeystore keystore.jks  -srckeystore /p12 file/ -srcstoretype PKCS12 -destalias alias -as 1<br>
-
-Test:<br>
-> curl -X POST https://localhost:9800/rest?content=Hello -k
-
-Test with security verification, the server certificate CN name should match the server URL hostname.
-
-> curl -X POST https://\<server hostname\>:9800/rest?content=Hello --cacert /CA chain certificate/
-
 ### Server certificate requested by CSR file
 Generate self-signed certiticate<br>
 > keytool -genkey -alias alias -keypass secret -keystore mykey.keystore -storepass secret<br>
