@@ -68,8 +68,8 @@ Copy and customize *template/secure.properties* file containing data for server 
 
 In the *runserver.sh* script file uncomment the setting of *SECURITY* variable. The variable should point to *secure.properties* file.<br> 
 ### Self-signed certificate
-Example command to prepare self-signed certificate.<br>
-> keytool -genkey -alias alias -keypass secret -keystore mykey.keystore -storepass secret
+Example command to prepare self-signed certificate. Pay attention to proper key bit size.<br>
+> keytool -genkey -alias alias -keypass secret -keystore mykey.keystore -storepass secret -keyalg rsa -keysize 2048
 
 Test<br>
 > curl -X POST https://localhost:9800/rest?content=Hello -k
