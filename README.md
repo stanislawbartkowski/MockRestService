@@ -76,10 +76,10 @@ Test, -k switches off the certificate validation<br>
 
 ### Server certificate requested by CSR file
 Generate self-signed certiticate<br>
-> keytool -genkey -alias alias -keypass secret -keystore mykey.keystore -storepass secret<br>
+> keytool -genkey -alias alias -keypass secret -keystore mykey.keystore -storepass secret -keyalg rsa -keysize 2048<br>
 
 Generate CSR file<br>
-> keytool -certreq -keyalg RSA -alias alias -file certreq.csr -keystore mykey.keystore<br>
+> keytool -certreq -keyalg RSA -alias alias -file certreq.csr -keystore mykey.keystore <br>
 
 Send CSR file to CA center for signing. <br>
 Important: In case of authority certificate chain, it is necessary to import all certificates in the chain separately one after one. Otherwise, while importing the server certificate it will fail with "Failed to establish chain from reply."<br>
