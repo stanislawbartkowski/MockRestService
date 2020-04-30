@@ -93,7 +93,9 @@ Import intermediate certificate<br>
 Import server certificate<br>
 > keytool -import -alias alias -keystore mykey.keystore -file root.cert.pem<br>
 
-Test as above.
+Test with certificate validation. The hostname (thinkde.sb.com) shoud match the CN of the server certificate.
+
+> curl -X POST https://thinkde.sb.com:9800/rest?content=Hello --cacert ca-chain.cert.pem<br>
 
 # Client
 ## Prerequisites
