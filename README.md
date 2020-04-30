@@ -85,13 +85,13 @@ Send CSR file to CA center for signing. <br>
 Important: In case of authority certificate chain, it is necessary to import all certificates in the chain separately one after one. Otherwise, while importing the server certificate it will fail with "Failed to establish chain from reply."<br>
 <br>
 Import root certificate<br>
-> keytool -import -alias root -keystore keystore.jks -file root.cert.pem<br>
+> keytool -import -alias root -keystore mykey.keystore -file root.cert.pem<br>
 
 Import intermediate certificate<br>
-> keytool -import -alias intermediate -keystore keystore.jks -file intermediate.cert.pem<br>
+> keytool -import -alias intermediate -keystore mykey.keystore -file intermediate.cert.pem<br>
 
 Import server certificate<br>
-> keytool -import -alias alias -keystore keystore.jks -file root.cert.pem<br>
+> keytool -import -alias alias -keystore mykey.keystore -file root.cert.pem<br>
 
 Test as above.
 
