@@ -71,11 +71,8 @@ In the *runserver.sh* script file uncomment the setting of *SECURITY* variable. 
 Example command to prepare self-signed certificate. Pay attention to proper key bit size.<br>
 > keytool -genkey -alias alias -keypass secret -keystore mykey.keystore -storepass secret -keyalg rsa -keysize 2048
 
-Test<br>
+Test, -k switches off the certificate validation<br>
 > curl -X POST https://localhost:9800/rest?content=Hello -k
-
-Test with security verification<br>
-> curl -X POST https://postgres.sb.com:9800/rest?content=Hello --cacert /CA chain certificate file/ 
 
 ### Server certificate signed by CA
 
