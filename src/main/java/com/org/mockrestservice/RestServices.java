@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
+// -Djava.security.auth.login.config=/home/sbartkowski/projects/MockRestService/src/main/resources/server_jaas.conf
+// -Dsun.security.krb5.debug=true
+
 class RestServices {
 
     private AtomicInteger counter = new AtomicInteger(0);
@@ -102,7 +105,6 @@ class RestServices {
             produceNODATAResponse(v);
         }
     }
-
 
     void registerServices(HttpServer server) {
         RestHelper.registerService(server, new ResetCounter());
