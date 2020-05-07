@@ -147,6 +147,7 @@ May 07, 2020 12:34:48 PM com.rest.restservice.RestLogger info
 Obtain Kerberos ticket. Use FQN in the URL to access the service.
 > kinit user1<br>
 > curl --negotiate -u : -X POST http://thinkde.sb.com:9800/rest?content=Hello <br>
+
 In the log server, watch the entry.
 ```
 May 07, 2020 12:35:38 PM com.rest.restservice.RestLogger info
@@ -207,10 +208,13 @@ Valid starting       Expires              Service principal
 <br>
 It can happen if */etc/hosts* contains host short name first.<br>
 Wrong:
+
 ```
 192.168.0.206	thinkde thinkde.sb.com 
 ```
+
 Correct:
+
 ```
 192.168.0.206	thinkde.sb.com thinkde
 ```
