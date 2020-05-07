@@ -101,7 +101,7 @@ Test with certificate validation. The hostname (thinkde.sb.com) shoud match the 
 MockRestService can be also protected by Kerberos power. In order to setup Kerberos authentication, both client and server need access to KDC/AD service.
 
 ### Prepare service principal and keytab
-Assume the MockRestService is installed on *thinkde.sb.com* host. Kerberos is FQN aware, it is important that hostname resolves to FQN. The service principal name should follow the pattern *HTTP/\<FQN host name\>@\<realm name\>". Example here: *HTTP/thinkde.sb.com@CENTOS.COM.REALM*
+Assume the MockRestService is installed on *thinkde.sb.com* host. Kerberos is FQN aware, it is important that hostname resolves to FQN. The service principal name should follow the pattern *HTTP/\<FQN host name\>@\<realm name\>*. Example here: *HTTP/thinkde.sb.com@CENTOS.COM.REALM*
   
 > kadmin <br>
 
@@ -114,11 +114,106 @@ kadmin:
 ```
 ### Prepare JAAS file for MockRestService
 JAAS file should contain *server* entry allowing passwordless service authentication.
+```
+server {
+    com.sun.security.auth.module.Krb5LoginModule required
+    doNotPrompt=true
+    principal="HTTP/thinkde.sb.com@CENTOS.COM.REALM"
+    useKeyTab=true
+    keyTab="/home/sb/s/keytab/service.keytab"
+    storeKey=true;
+};
+```
+### Enable MockRestService for Kerberos
+In *runserver.sh* script configure and uncomment *KERBEROS* variable.
+```
+PORT=9800
+#SECURITY=secure.properties
+#SECURITY=
+KERBEROS="-Djava.security.auth.login.config=$PWD/server_jaas.conf"
+KERBEROSDEBUG=-Dsun.security.krb5.debug=true
+java $KERBEROS $KERBEROSDEBUG -cp target/MockRestService-1.0-SNAPSHOT-jar-with-dependencies.jar com.org.mockrestservice.MockRestService $PORT $SECURITY
 
+```
+### Run
+>./runserver.sh
+```
+May 07, 2020 12:34:48 PM com.rest.restservice.RestLogger info
+INFO: Authenticated principal: [HTTP/thinkde.sb.com@CENTOS.COM.REALM]
+May 07, 2020 12:34:48 PM com.rest.restservice.RestLogger info
 
+```
+### Test client
+Obtain Kerberos ticket. Use FQN in the URL to access the service.
+> kinit user1<br>
+> curl --negotiate -u : -X POST http://thinkde.sb.com:9800/rest?content=Hello <br>
+In the log server, watch the entry.
+```
+May 07, 2020 12:35:38 PM com.rest.restservice.RestLogger info
+INFO: Authenticated as: user1@CENTOS.COM.REALM
+May 07, 2020 12:35:38 PM com.rest.restservice.RestLogger info
+INFO: POST content=Hello
 
+```
+### Troubleshooting
+Enable *KERBEROSDEBUG* in the *runservice.sh* script file giving more verbose output.<br>
+Add -v to *curl* command for more verbose output.
 
+* *MockRestService* seems to be stuck, do not response <br>
+Make sure that */etc/krb5.conf* contains entry.
+```
+[libdefaults]
+..........
+    udp_preference_limit = 1
 
+```
+
+* Cannot access URL, in the server log there is an entry:
+```
+GSSException: No credential found for: 1.3.6.1.5.5.2 usage: Accept
+	at sun.security.jgss.GSSCredentialImpl.getElement(GSSCredentialImpl.java:600)
+```
+or
+```
+message GSSException: Failure unspecified at GSS-API level (Mechanism level: Checksum failed)
+```
+On the client side, make sure that service ticket obtained contain FQN, not short hostname.<br>
+
+Correct:
+```
+ klist
+Ticket cache: FILE:/tmp/krb5cc_1001
+Default principal: user1@CENTOS.COM.REALM
+
+Valid starting       Expires              Service principal
+07.05.2020 12:18:25  08.05.2020 12:18:25  krbtgt/CENTOS.COM.REALM@CENTOS.COM.REALM
+	renew until 07.05.2020 12:18:25
+07.05.2020 12:26:48  08.05.2020 12:18:25  HTTP/thinkde.sb.com@CENTOS.COM.REALM
+	renew until 07.05.2020 12:18:25
+
+```
+Wrong:
+```
+klist
+Ticket cache: FILE:/tmp/krb5cc_1001
+Default principal: user1@CENTOS.COM.REALM
+
+Valid starting       Expires              Service principal
+07.05.2020 12:18:25  08.05.2020 12:18:25  krbtgt/CENTOS.COM.REALM@CENTOS.COM.REALM
+	renew until 07.05.2020 12:18:25
+07.05.2020 12:26:48  08.05.2020 12:18:25  HTTP/thinkde@CENTOS.COM.REALM
+	renew until 07.05.2020 12:18:25
+```
+<br>
+It can happen if */etc/hosts* contains host short name first.<br>
+Wrong:
+```
+192.168.0.206	thinkde thinkde.sb.com 
+```
+Correct:
+```
+192.168.0.206	thinkde.sb.com thinkde
+```
 
 # Client
 ## Prerequisites
