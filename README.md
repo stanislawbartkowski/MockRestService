@@ -103,7 +103,18 @@ MockRestService can be also protected by Kerberos power. In order to setup Kerbe
 ### Prepare service principal and keytab
 Assume the MockRestService is installed on *thinkde.sb.com* host. Kerberos is FQN aware, it is important that hostname resolves to FQN. The service principal name should follow the pattern *HTTP/\<FQN host name\>@\<realm name\>". Example here: *HTTP/thinkde.sb.com@CENTOS.COM.REALM*
   
-> kadmin 
+> kadmin <br>
+
+> addprinc -randkey HTTP/thinkde.sb.com@CENTOS.COM.REALM<br>
+> ktadd -k service.keytab HTTP/thinkde.sb.com@CENTOS.COM.REALM
+```
+Entry for principal HTTP/thinkde.sb.com@CENTOS.COM.REALM with kvno 3, encryption type aes256-cts-hmac-sha1-96 added to keytab WRFILE:service.keytab.
+Entry for principal HTTP/thinkde.sb.com@CENTOS.COM.REALM with kvno 3, encryption type aes128-cts-hmac-sha1-96 added to keytab WRFILE:service.keytab.
+kadmin:
+```
+### Prepare JAAS file for MockRestService
+JAAS file should contain *server* entry allowing passwordless service authentication.
+
 
 
 
