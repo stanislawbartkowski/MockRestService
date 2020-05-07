@@ -177,7 +177,7 @@ or
 ```
 message GSSException: Failure unspecified at GSS-API level (Mechanism level: Checksum failed)
 ```
-On the client side, make sure that service ticket obtained contain FQN, not short hostname.<br>
+On the client side, make sure that service ticket obtained contains FQN, not short hostname.<br>
 
 Correct:
 ```
