@@ -97,6 +97,18 @@ Test with certificate validation. The hostname (thinkde.sb.com) shoud match the 
 
 > curl -X POST https://thinkde.sb.com:9800/rest?content=Hello --cacert ca-chain.cert.pem<br>
 
+## Kerberos
+MockRestService can be also protected by Kerberos power. In order to setup Kerberos authentication, both client and server need access to KDC/AD service.
+
+### Prepare service principal and keytab
+Assume the MockRestService is installed on *thinkde.sb.com* host. Kerberos is FQN aware, it is important that hostname resolves to FQN. The service principal name should follow the pattern *HTTP/\<FQN host name\>@\<realm name\>". Example here: *HTTP/thinkde.sb.com@CENTOS.COM.REALM*
+  
+> kadmin 
+
+
+
+
+
 # Client
 ## Prerequisites
 * Python 3 (tested with Python 3.6 level)<br>
