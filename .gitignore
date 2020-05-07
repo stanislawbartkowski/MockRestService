@@ -7,3 +7,4 @@ run.sh
 /secure.properties
 /runserver.sh
 /sec
+/server_jaas.conf
