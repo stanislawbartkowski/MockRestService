@@ -63,23 +63,34 @@
             </plugin>
         </plugins>
     </build>
-    <dependencies>
-	    <!--	    
-        <dependency>
-            <groupId>com.restservice</groupId>
-            <artifactId>RestService</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
--->
 
-            <dependency>
-                <groupId>com.restservice</groupId>
-                <artifactId>RestService</artifactId>
-                <version>1.0</version>
-                <scope>compile</scope>
-            </dependency>
-        </dependencies>
+
+    <dependencies>
+
+    <!-- https://mvnrepository.com/artifact/commons-cli/commons-cli -->
+    <dependency>
+        <groupId>commons-cli</groupId>
+        <artifactId>commons-cli</artifactId>
+        <version>1.4</version>
+    </dependency>
+
+
+    <!-- https://maven.pkg.github.com/stanislawbartkowski/RestService/ -->
+    <dependency>
+        <groupId>com.restservice</groupId>
+        <artifactId>restservice</artifactId>
+        <version>1.0</version>
+    </dependency>
+
+    </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub stanislawnartkowski Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/stanislawbartkowski/RestService</url>
+        </repository>
+    </distributionManagement>
 
 
 </project>

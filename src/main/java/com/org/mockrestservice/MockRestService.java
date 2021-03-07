@@ -2,6 +2,8 @@ package com.org.mockrestservice;
 
 import com.rest.restservice.*;
 
+import java.util.Optional;
+
 // -Dsun.security.krb5.debug=true -Djava.security.auth.login.config=/home/sbartkowski/projects/MockRestService/src/main/resources/server_jaas.conf
 
 // -Djavax.net.debug=all
@@ -15,26 +17,13 @@ public class MockRestService extends RestStart {
 
     // 9800 src/main/resources/secure.properties
 
-    private static void help() {
-        P(" Non-secure HTTP connection:");
-        P("   Parameters: /port number/");
-        P("     Example");
-        P("       java ...  9800 ");
-        P("");
-        P(" Secure HTTP connection:");
-        P("      Parameters: /port number/ /secure conf/");
-        System.exit(4);
-    }
-
     public static void main(String[] args) throws Exception {
-        if (args.length != 1 && args.length != 2) {
-            help();
-        }
-        int PORT = Integer.parseInt(args[0]);
-        RestStart(PORT, (server) -> new RestServices().registerServices(server),
-                (args.length == 1) ?
+        Optional<Params.RestParams> par = Params.buildCmd(args);
+        if (!par.isPresent()) System.exit(4);
+        RestStart(par.get().getPORT(), (server) -> new RestServices().registerServices(server),
+                (!par.get().getSSLFile().isPresent()) ?
                         new String[]{} :
-                        SSLParam.readConf(args[1])
+                        SSLParam.readConf(par.get().getSSLFile().get())
         );
     }
 }
