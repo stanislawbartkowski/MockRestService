@@ -20,7 +20,7 @@ public class Params {
 
         RestParams(CommandLine cmd) {
             this.cmd = cmd;
-            sslfile = cmd.getOptionValue('c') == null ? Optional.empty() : Optional.of(cmd.getOptionValue('c'));
+            sslfile = cmd.getOptionValue('s') == null ? Optional.empty() : Optional.of(cmd.getOptionValue('s'));
             PORT = Integer.parseInt(cmd.getOptionValue('p'));
         }
 

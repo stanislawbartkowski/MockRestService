@@ -7,7 +7,7 @@ import java.util.Optional;
 // -Dsun.security.krb5.debug=true -Djava.security.auth.login.config=/home/sbartkowski/projects/MockRestService/src/main/resources/server_jaas.conf
 
 // -Djavax.net.debug=all
-// 9800 /home/sbartkowski/projects/MockRestService/src/test/resources/secure.properties
+// -p 9800 -s /home/sbartkowski/projects/MockRestService/src/test/resources/secure.properties
 
 public class MockRestService extends RestStart {
 

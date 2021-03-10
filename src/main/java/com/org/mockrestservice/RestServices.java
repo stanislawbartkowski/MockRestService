@@ -1,10 +1,13 @@
 package com.org.mockrestservice;
 
 import com.rest.restservice.*;
+import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -106,11 +109,29 @@ class RestServices {
         }
     }
 
+    static class MyHandler implements HttpHandler {
+        @Override
+        public void handle(HttpExchange t) throws IOException {
+            String response = "This is the response";
+            t.sendResponseHeaders(200, response.length());
+            t.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+            OutputStream os = t.getResponseBody();
+            os.write(response.getBytes());
+            os.flush();
+            os.close();
+        }
+    }
+
     void registerServices(HttpServer server) {
         RestHelper.registerService(server, new ResetCounter());
         RestHelper.registerService(server, new Counter());
         RestHelper.registerService(server, new IncCounter());
         RestHelper.registerService(server, new UploadFile());
+
+
+
+//        HttpContext hc = server.createContext("/", new MyHandler());
+
     }
 
 }
