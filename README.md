@@ -289,14 +289,13 @@ Create *restmock-sa* less restrictive Service Account to allow pod listening on 
 deployment.apps/restmock created
 service/restmock created
 ```
-
 Expose the service to external world.<br>
 
 > oc expose scv/restmock<br>
 <br>
 > oc get routes<br>
+
 ```
-sbartkowski:MockRestService$ oc get route
 NAME        HOST/PORT                                   PATH   SERVICES    PORT           TERMINATION   WILDCARD
 restmock    restmock-sb.apps.jobbery.cp.fyre.ibm.com           restmock    restmock-tcp                 None
 ```
@@ -304,6 +303,7 @@ restmock    restmock-sb.apps.jobbery.cp.fyre.ibm.com           restmock    restm
 Access the service.<br>
 
 > curl -X POST  http://restmock-sb.apps.jobbery.cp.fyre.ibm.com/rest?content=Hello<br>
+
 ```
 received (1)sbartkowski:cpd$ curl -X POST  http://restmock-sb.apps.jobbery.cp.fyre.ibm.com/rest?content=Hello 
 ```
