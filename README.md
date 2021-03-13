@@ -263,3 +263,48 @@ OK
 
 * run.sh Single run
 * runattack.sh Launch a seriers of  *run.sh* in parallel
+
+# Podman
+
+## Image and container
+Create image and container. RestService port 80 is mapped to 8080.
+
+> podman  build --build-arg RESTPORT=80 -t restmock . <br>
+> podman run --name restmock -d -p 8080:80 restmock <br>
+
+## Make it public
+
+> podman tag restmock  quay.io/stanislawbartkowski/restmock:latest<br>
+> podman push quay.io/stanislawbartkowski/restmock:latest<br>
+
+## Kubernetes, Openshift
+
+Create *restmock-sa* less restrictive Service Account to allow pod listening on port 80.
+
+> oc create sa restmock-sa<br>
+> oc adm policy add-scc-to-user anyuid -z restmock-sa<br>
+
+> oc create -f restmock.yml<br>
+```
+deployment.apps/restmock created
+service/restmock created
+```
+
+Expose the service to external world.<br>
+
+> oc expose scv/restmock<br>
+<br>
+> oc get routes<br>
+```
+sbartkowski:MockRestService$ oc get route
+NAME        HOST/PORT                                   PATH   SERVICES    PORT           TERMINATION   WILDCARD
+restmock    restmock-sb.apps.jobbery.cp.fyre.ibm.com           restmock    restmock-tcp                 None
+```
+<br>
+Access the service.<br>
+
+> curl -X POST  http://restmock-sb.apps.jobbery.cp.fyre.ibm.com/rest?content=Hello<br>
+```
+received (1)sbartkowski:cpd$ curl -X POST  http://restmock-sb.apps.jobbery.cp.fyre.ibm.com/rest?content=Hello 
+```
+
