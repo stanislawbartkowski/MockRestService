@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: restmock
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: restmock
+  template:
+    metadata:
+      labels:
+        app: restmock
+    spec:
+      serviceAccountName: restmock-sa
+      containers:
+        - name: restmock
+          image: quay.io/stanislawbartkowski/restmock:latest
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: restmock
+    name: restmock
+  name: restmock
+spec:
+  ports:
+    - name: restmock-tcp
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: restmock
