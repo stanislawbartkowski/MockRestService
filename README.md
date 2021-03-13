@@ -267,10 +267,10 @@ OK
 # Podman
 
 ## Image and container
-Create image and container. RestService port 80 is mapped to 8080.
+Create image and container. RestService is listening on 8080 port. You can specify different port if necessary.
 
-> podman  build --build-arg RESTPORT=80 -t restmock . <br>
-> podman run --name restmock -d -p 8080:80 restmock <br>
+> podman  build --build-arg RESTPORT=800 -t restmock . <br>
+> podman run --name restmock -d -p 8080:8080 restmock <br>
 
 ## Make it public
 
@@ -279,10 +279,20 @@ Create image and container. RestService port 80 is mapped to 8080.
 
 ## Kubernetes, Openshift
 
-Create *restmock-sa* less restrictive Service Account to allow pod listening on port 80.
+
+if *RESTPORT* is less then 1000, create *restmock-sa* less restrictive Service Account to allow run pod as *root* privileged user.
 
 > oc create sa restmock-sa<br>
 > oc adm policy add-scc-to-user anyuid -z restmock-sa<br>
+> 
+Modify *restmock.yml*
+```
+    spec:
+      serviceAccountName: restmock-sa
+      containers:
+        - name: restmock
+
+```
 
 > oc create -f restmock.yml<br>
 ```
