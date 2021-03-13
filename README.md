@@ -360,8 +360,8 @@ Use *restmock-sa* Service Account created before. The secrets are recreated in *
 
 ## Create passthrough route
 
->  oc create route passthrough restmock-secure --service restmock-secure --port 443 <br>
-<br>
+> oc create route passthrough restmock-secure --service restmock-secure --port 443 <br>
+
 > oc get route<br>
 
 ```
