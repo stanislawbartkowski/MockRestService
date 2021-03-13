@@ -306,6 +306,6 @@ Access the service.<br>
 > curl -X POST  http://restmock-sb.apps.jobbery.cp.fyre.ibm.com/rest?content=Hello<br>
 
 ```
-received (1)sbartkowski:cpd$ curl -X POST  http://restmock-sb.apps.jobbery.cp.fyre.ibm.com/rest?content=Hello 
+received (1)
 ```
 
