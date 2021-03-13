@@ -293,6 +293,7 @@ Expose the service to external world.<br>
 
 > oc expose scv/restmock<br>
 <br>
+
 > oc get routes<br>
 
 ```
