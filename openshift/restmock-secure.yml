@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: restmock-secure
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: restmock-secure
+  template:
+    metadata:
+      labels:
+        app: restmock-secure
+    spec:
+      serviceAccountName: restmock-sa
+      containers:
+        - name: restmock-secure
+          image: quay.io/stanislawbartkowski/restmock-secure:latest
+          ports:
+            - containerPort: 443
+          volumeMounts:
+          # name must match the volume name below
+            - name: secret-volume
+              mountPath: /sec
+              readOnly: true
+      volumes:
+      - name: secret-volume
+        secret:
+          secretName: restmock-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: restmock-secure
+    name: restmock-secure
+  name: restmock-secure
+spec:
+  ports:
+    - name: restmock-secure-tcp
+      port: 443
+      protocol: TCP
+      targetPort: 443
+  selector:
+    app: restmock-secure
