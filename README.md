@@ -363,6 +363,7 @@ Use *restmock-sa* Service Account created before. The secrets are recreated in *
 >  oc create route passthrough restmock-secure --service restmock-secure --port 443 <br>
 <br>
 > oc get route<br>
+
 ```
 NAME              HOST/PORT                                         PATH   SERVICES          PORT           TERMINATION   WILDCARD
 restmock-secure   restmock-secure-sb.apps.jobbery.cp.fyre.ibm.com          restmock-secure   443            passthrough   None
