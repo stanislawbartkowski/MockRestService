@@ -326,7 +326,7 @@ store.key.filename=/sec/mykey.keystore
 key.store.password=secret
 
 ```
-## SELinix
+## SELinux
 If SELinux is enabled, create SE policy for *sec* directory to give container access to it.<br>
 
 >semanage fcontext -a  -t container_file_t '{dir}/sec(/.*)?'<br>
