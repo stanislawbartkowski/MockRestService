@@ -335,10 +335,40 @@ If SELinux is enabled, create SE policy for *sec* directory to give container ac
 ## Create image and container
 Image.<br>
 
-> podman  build --build-arg RESTPORT=80 --build-arg SECURE="-s /sec/secure.properties"  -t restmock .<br>
+> podman  build --build-arg RESTPORT=443 --build-arg SECURE="-s /sec/secure.properties"  -t restmock-secure .<br>
 
 Container.<br>
-> podman run --name restmock -d -p 8080:80 -v {dir}/sec:/sec restmock<br>
+> podman run --name restmock-secure -d -p 8443:443 -v {dir}/sec:/sec restmock-secure<br>
 
+## Make it public
 
+> podman tag restmock-secure  quay.io/stanislawbartkowski/restmock-secure:latest
 
+> podman push   quay.io/stanislawbartkowski/restmock-secure:latest
+
+## Create secrets
+
+Use configuration file and keystore prepared earlier.<br>
+
+> oc create secret generic restmock-secret --from-file=sec/mykey.keystore  --from-file=sec/secure.properties 
+
+## Deploy to OpenShift
+
+Use *restmock-sa* Service Account created before. The secrets are recreated in */sec* pod directory. <br>
+
+> oc create -f restmock-secure.yml<br>
+
+## Create passthrough route
+
+>  oc create route passthrough restmock-secure --service restmock-secure --port 443 <br>
+<br>
+> oc get route<br>
+```
+NAME              HOST/PORT                                         PATH   SERVICES          PORT           TERMINATION   WILDCARD
+restmock-secure   restmock-secure-sb.apps.jobbery.cp.fyre.ibm.com          restmock-secure   443            passthrough   None
+```
+
+## Access the service in secure way
+
+> curl -X POST  https://restmock-secret-sb.apps.jobbery.cp.fyre.ibm.com/rest?content=Hello  -k
+<br>
