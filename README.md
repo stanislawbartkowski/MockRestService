@@ -308,4 +308,37 @@ Access the service.<br>
 ```
 received (1)
 ```
+# Podman, secure service
+
+## Prepare configuration and keystore
+
+Prepare *sec* directory containing parameter file and *keystore* with key and certificate.<br>
+
+> ls sec<br>
+```
+mykey.keystore  
+secure.properties
+```
+
+> cat sec/secure.properties
+```
+store.key.filename=/sec/mykey.keystore
+key.store.password=secret
+
+```
+## SELinix
+If SELinux is enabled, create SE policy for *sec* directory to give container access to it.<br>
+
+>semanage fcontext -a  -t container_file_t '{dir}/sec(/.*)?'<br>
+>restorecon -R {dir}/sec<br>
+
+## Create image and container
+Image.<br>
+
+> podman  build --build-arg RESTPORT=80 --build-arg SECURE="-s /sec/secure.properties"  -t restmock .<br>
+
+Container.<br>
+> podman run --name restmock -d -p 8080:80 -v {dir}/sec:/sec restmock<br>
+
+
 
