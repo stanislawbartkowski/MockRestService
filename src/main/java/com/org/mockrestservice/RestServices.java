@@ -80,8 +80,10 @@ class RestServices {
         public void servicehandle(RestHelper.IQueryInterface v) throws IOException {
             counter.incrementAndGet();
             String content = getStringParam(v, "content");
+            String resp = "received (" + counter.get() + ")";
             RestLogger.info(counter + " received=" + content.length());
-            produceOKResponse(v, "received (" + counter.get() + ")");
+            RestLogger.info(resp);
+            produceOKResponse(v,resp);
         }
     }
 
